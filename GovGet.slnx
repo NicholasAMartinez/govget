@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/src/">
+    <Project Path="src/GovGet.Api/GovGet.Api.csproj" />
     <Project Path="src/GovGet.Cli/GovGet.Cli.csproj" />
     <Project Path="src/GovGet.Core/GovGet.Core.csproj" />
   </Folder>
