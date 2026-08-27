@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/GovGet.Cli/GovGet.Cli.csproj" />
+    <Project Path="src/GovGet.Core/GovGet.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/GovGet.Core.Tests/GovGet.Core.Tests.csproj" />
+  </Folder>
+</Solution>
