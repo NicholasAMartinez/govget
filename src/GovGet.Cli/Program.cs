@@ -55,11 +55,10 @@ static async Task HandleUsgsCommandAsync(string[] args)
     {
         case "help":
         {
-            Console.WriteLine()
             Console.WriteLine("Available commands:");
-            Console.WriteLine("  help - Show this help message.");
-            Console.WriteLine("  version - Show the current USGS API version.")
-
+            Console.WriteLine("  help    - Show this help message.");
+            Console.WriteLine("  version - Show the current USGS API version.");
+            break;
         }
 
         case "version":
