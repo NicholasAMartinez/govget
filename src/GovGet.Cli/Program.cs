@@ -47,12 +47,21 @@ static async Task HandleUsgsCommandAsync(string[] args)
     if (args.Length < 2)
     {
         Console.WriteLine("Usage: govget usgs <command>");
-        Console.WriteLine("Available commands: version");
+        Console.WriteLine("Use 'govget usgs help' to see available commands.");
         return;
     }
 
     switch (args[1].ToLowerInvariant())
     {
+        case "help":
+        {
+            Console.WriteLine()
+            Console.WriteLine("Available commands:");
+            Console.WriteLine("  help - Show this help message.");
+            Console.WriteLine("  version - Show the current USGS API version.")
+
+        }
+
         case "version":
         {
             using var httpClient = new HttpClient
