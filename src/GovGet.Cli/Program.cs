@@ -58,6 +58,7 @@ static async Task HandleUsgsCommandAsync(string[] args)
             Console.WriteLine("Available commands:");
             Console.WriteLine("  help    - Show this help message.");
             Console.WriteLine("  version - Show the current USGS API version.");
+            Console.WriteLine("  count   - Show the number of earthquakes in the last 30 days.");
             break;
         }
 
@@ -75,6 +76,24 @@ static async Task HandleUsgsCommandAsync(string[] args)
             var version = await usgsClient.GetVersionAsync();
 
             Console.WriteLine($"USGS Earthquake API version: {version}");
+            break;
+        }
+
+        case "count":
+        {
+            using var httpClient = new HttpClient
+            {
+                BaseAddress = new Uri(
+                    "https://earthquake.usgs.gov/fdsnws/event/1/"
+                )
+            };
+
+            var usgsClient = new UsgsClient(httpClient);
+
+            uint count = await usgsClient.GetCountAsync();
+
+            Console.WriteLine($"There have been {count} earthquake{((count == 1) ? "" : "'s")} in the last 30 days.");
+
             break;
         }
 

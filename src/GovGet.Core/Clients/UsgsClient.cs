@@ -24,8 +24,15 @@ public sealed class UsgsClient
     /// <returns>The API version reported by USGS.</returns>
     public async Task<string> GetVersionAsync()
     {
-        var version = await _httpClient.GetStringAsync("version");
+        string version = await _httpClient.GetStringAsync("version");
 
         return version.Trim();
+    }
+
+    public async Task<uint> GetCountAsync(string filter = "")
+    {
+        string response = await _httpClient.GetStringAsync($"count?{filter}");
+
+        return uint.Parse(response.Trim());
     }
 }
