@@ -31,5 +31,3 @@ app.MapGet("/api/count", async (UsgsClient usgsClient) =>
 });
 
 app.Run();
-
-app.Run();
