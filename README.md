@@ -28,9 +28,13 @@ dotnet run --project src/GovGet.Cli -- ping
 dotnet run --project src/GovGet.Cli -- usgs help
 dotnet run --project src/GovGet.Cli -- usgs version
 dotnet run --project src/GovGet.Cli -- usgs count
+dotnet run --project src/GovGet.Cli -- usgs count --starttime 2026-01-01 --endtime 2026-01-31 --limit 100 --minmagnitude 2.5
 ```
 
 The `usgs count` command retrieves the number of earthquakes recorded by the USGS in the last 30 days.
+It supports the `--starttime`, `--endtime`, `--limit`, and `--minmagnitude`
+USGS query options. Dates must use ISO 8601 format, and option values are passed
+after the `count` operation as shown above.
 
 ## Run the API
 

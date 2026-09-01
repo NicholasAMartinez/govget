@@ -1,3 +1,5 @@
+using GovGet.Core.Models;
+
 namespace GovGet.Core.Clients;
 
 /// <summary>
@@ -29,9 +31,13 @@ public sealed class UsgsClient
         return version.Trim();
     }
 
-    public async Task<uint> GetCountAsync(string filter = "")
+    public async Task<uint> GetCountAsync(UsgsEarthquakeQuery? query = null)
     {
-        string response = await _httpClient.GetStringAsync($"count?{filter}");
+        string queryString = query?.ToQueryString() ?? "";
+        string requestUri = string.IsNullOrEmpty(queryString)
+            ? "count"
+            : $"count?{queryString}";
+        string response = await _httpClient.GetStringAsync(requestUri);
 
         return uint.Parse(response.Trim());
     }

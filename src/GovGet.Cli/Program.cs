@@ -1,4 +1,5 @@
 ﻿using GovGet.Core.Clients;
+using GovGet.Core.Models;
 using GovGet.Core.Services;
 
 if (args.Length == 0)
@@ -59,6 +60,12 @@ static async Task HandleUsgsCommandAsync(string[] args)
             Console.WriteLine("  help    - Show this help message.");
             Console.WriteLine("  version - Show the current USGS API version.");
             Console.WriteLine("  count   - Show the number of earthquakes in the last 30 days.");
+            Console.WriteLine();
+            Console.WriteLine("Count options:");
+            Console.WriteLine("  --starttime <ISO 8601 date>");
+            Console.WriteLine("  --endtime <ISO 8601 date>");
+            Console.WriteLine("  --limit <positive integer>");
+            Console.WriteLine("  --minmagnitude <number>");
             break;
         }
 
@@ -81,6 +88,19 @@ static async Task HandleUsgsCommandAsync(string[] args)
 
         case "count":
         {
+            UsgsEarthquakeQuery query;
+
+            try
+            {
+                query = UsgsEarthquakeQuery.Parse(args[2..]);
+            }
+            catch (ArgumentException exception)
+            {
+                Console.Error.WriteLine(exception.Message);
+                Environment.ExitCode = 1;
+                break;
+            }
+
             using var httpClient = new HttpClient
             {
                 BaseAddress = new Uri(
@@ -90,9 +110,16 @@ static async Task HandleUsgsCommandAsync(string[] args)
 
             var usgsClient = new UsgsClient(httpClient);
 
-            uint count = await usgsClient.GetCountAsync();
+            uint count = await usgsClient.GetCountAsync(query);
 
-            Console.WriteLine($"There have been {count} earthquake{((count == 1) ? "" : "'s")} in the last 30 days.");
+            if (query.HasParameters)
+            {
+                Console.WriteLine($"The query matched {count} earthquake{((count == 1) ? "" : "s")}.");
+            }
+            else
+            {
+                Console.WriteLine($"There have been {count} earthquake{((count == 1) ? "" : "'s")} in the last 30 days.");
+            }
 
             break;
         }
