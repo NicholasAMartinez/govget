@@ -19,12 +19,19 @@ function App() {
   }
 
   return (
-    <main style={{display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start'}}>
-      <button onClick={handlePing}>
+    <main style={{display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
+      
+      <button 
+        style={{padding: '1rem 2rem', width: '10rem', fontSize: '1.25rem', borderRadius: '0.5rem', backgroundColor: '#007bff', color: '#fff', border: 'none', cursor: 'pointer'}}
+        onClick={handlePing}
+      >
         Ping
       </button>
 
-      <button onClick={handleCount}>
+      <button 
+        style={{padding: '1rem 2rem', width: '10rem', fontSize: '1.25rem', borderRadius: '0.5rem', backgroundColor: '#007bff', color: '#fff', border: 'none', cursor: 'pointer'}}
+        onClick={handleCount}
+      >
         Count
       </button>
 
