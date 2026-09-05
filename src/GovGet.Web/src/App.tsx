@@ -3,6 +3,7 @@ import { getPing } from './api/ping'
 import type { PingResult } from './models/PingResult'
 import { getCount } from './api/count'
 import type { CountResult } from './models/CountResult'
+import './App.css'
 
 function App() {
   const [result, setResult] = useState<PingResult | null>(null)
@@ -11,41 +12,57 @@ function App() {
   async function handlePing() {
     const pingResult = await getPing()
     setResult(pingResult)
+    setCount(null)
   }
 
   async function handleCount() {
     const countResult = await getCount()
     setCount(countResult)
+    setResult(null)
   }
 
   return (
-    <main style={{display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
-      
-      <button 
-        style={{padding: '1rem 2rem', width: '10rem', fontSize: '1.25rem', borderRadius: '0.5rem', backgroundColor: '#007bff', color: '#fff', border: 'none', cursor: 'pointer'}}
-        onClick={handlePing}
-      >
-        Ping
-      </button>
+    <main className="app">
+      <aside className="api-menu" aria-label="API menu">
+        <button
+          className={`api-button${result ? ' is-selected' : ''}`}
+          aria-pressed={Boolean(result)}
+          onClick={handlePing}
+        >
+          Ping
+        </button>
 
-      <button 
-        style={{padding: '1rem 2rem', width: '10rem', fontSize: '1.25rem', borderRadius: '0.5rem', backgroundColor: '#007bff', color: '#fff', border: 'none', cursor: 'pointer'}}
-        onClick={handleCount}
-      >
-        Count
-      </button>
+        <button
+          className={`api-button${count ? ' is-selected' : ''}`}
+          aria-pressed={Boolean(count)}
+          onClick={handleCount}
+        >
+          Count
+        </button>
+      </aside>
 
-      {result && (
-        <div>
-          <p>Status: {result.status}</p>
-          <p>Timestamp: {result.timestamp}</p>
-        </div>
-      )}
-      {count && (
-        <div>
-          <p>Number of earthquakes in the last 30 days: {count.count}</p>
-        </div>
-      )}
+      <section className="output" aria-label="API output" aria-live="polite">
+        {result && (
+          <div className="result-card">
+            <p>
+              <span className="result-label">Status:</span>
+              <span className="result-value">{result.status}</span>
+            </p>
+            <p>
+              <span className="result-label">Timestamp:</span>
+              <span className="result-value">{result.timestamp}</span>
+            </p>
+          </div>
+        )}
+        {count && (
+          <div className="result-card">
+            <p>
+              <span className="result-label">Number of earthquakes in the last 30 days:</span>
+              <span className="result-value">{count.count}</span>
+            </p>
+          </div>
+        )}
+      </section>
     </main>
   )
 }
